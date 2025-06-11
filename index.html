@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD Lecciones Modularizado</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Lecciones de Inglés 📚</h1>
+      <form id="lessonForm">
+        <input
+          type="text"
+          id="title"
+          placeholder="Título de la lección"
+          required
+        />
+        <input
+          type="text"
+          id="description"
+          placeholder="Descripción"
+          required
+        />
+        <button type="submit">Agregar Lección</button>
+      </form>
+      <table id="lessonTable">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

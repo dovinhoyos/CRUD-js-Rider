@@ -1,0 +1,144 @@
+/* Fondo y container */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 1s ease-out;
+}
+
+/* Formulario */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+form input {
+  flex: 1 1 40%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+form input:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+  outline: none;
+}
+
+form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #667eea;
+  color: white;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #5a67d8;
+  transform: scale(1.05);
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+}
+
+tbody tr {
+  background-color: rgba(255, 255, 255, 0.05);
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  animation: fadeSlideIn 0.5s ease;
+}
+
+tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.01);
+}
+
+/* Botones de acción */
+button.action-btn {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.2s;
+}
+
+button.edit {
+  background-color: #48bb78;
+}
+
+button.delete {
+  background-color: #e53e3e;
+}
+
+button.action-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Animaciones claveframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 500px) {
+  form input {
+    flex: 1 1 100%;
+  }
+}
