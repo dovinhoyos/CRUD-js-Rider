@@ -21,35 +21,9 @@ body {
   animation: fadeIn 1s ease-out;
 }
 
-/* Formulario */
-form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+.header {
+  text-align: center;
   margin-bottom: 20px;
-  width: 100%;
-}
-
-form input {
-  flex: 1 1 45%;
-  min-width: 120px;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  transition: background-color 0.3s;
-}
-
-form input:focus {
-  background-color: rgba(255, 255, 255, 0.3);
-  outline: none;
-}
-
-input.error {
-  border: 2px solid #f56565;
-  background-color: rgba(255, 255, 255, 0.15);
 }
 
 form button {
@@ -148,6 +122,8 @@ button.action-btn:hover {
   display: none;
   justify-content: center;
   align-items: center;
+  padding: 20px; /* importante para móviles */
+  box-sizing: border-box;
   z-index: 999;
 }
 
@@ -197,6 +173,133 @@ button.action-btn:hover {
   transform: scale(1.05);
 }
 
+.floating-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #667eea;
+  color: white;
+  padding: 14px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s;
+  z-index: 1000;
+}
+
+.floating-button:hover {
+  transform: scale(1.05);
+}
+
+/* 🧱 Modal de Formulario */
+#form-modal-overlay .modal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#form-modal-overlay .modal h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+#lessonForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* <- bajamos el gap */
+  padding: 0;
+  margin: 0;
+}
+
+#lessonForm input {
+  margin: 0; /* importante para evitar espacio fantasma */
+  padding: 12px;
+  border: 2px solid transparent;
+  transition:
+    border 0.3s ease,
+    background-color 0.3s ease;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#lessonForm input:focus {
+  outline: 2px solid #667eea;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+#lessonForm input::placeholder {
+  color: #ddd;
+}
+
+input.error {
+  border: 2px solid #f56565;
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.modal-buttons .confirm {
+  background-color: #e53e3e;
+  color: white;
+}
+
+.modal-buttons .cancel {
+  background-color: #4a5568;
+  color: white;
+}
+
+.modal-buttons button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: transform 0.2s;
+}
+
+.modal-buttons button:hover {
+  transform: scale(1.05);
+}
+
+.table-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.add-btn {
+  background-color: #667eea;
+  color: white;
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    background-color 0.3s;
+}
+
+.add-btn:hover {
+  background-color: #5a67d8;
+  transform: scale(1.05);
+}
+
 /* Animaciones claveframes */
 @keyframes fadeIn {
   from {
@@ -234,5 +337,76 @@ button.action-btn:hover {
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+  }
+
+  .container {
+    width: 100%;
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  #lessonForm {
+    gap: 10px;
+  }
+
+  #lessonForm input {
+    font-size: 1.05rem;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal-buttons button {
+    width: 100%;
+    font-size: 1.05rem;
+  }
+
+  .table-header {
+    justify-content: center;
+  }
+
+  .add-btn {
+    font-size: 1.05rem;
+    width: 100%;
+  }
+
+  .modal {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  #lessonForm input {
+    font-size: 1.1rem;
+  }
+
+  .modal-buttons button {
+    font-size: 1.1rem;
+  }
+
+  th,
+  td {
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
+
+  .add-btn {
+    font-size: 1rem;
+    padding: 10px 14px;
   }
 }

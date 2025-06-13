@@ -1,24 +1,32 @@
 import { getLessons, deleteLesson } from "./data.js";
 
 const tableBody = document.querySelector("#lessonTable tbody");
-const formButton = document.querySelector("#lessonForm button");
+const formModal = document.getElementById("form-modal-overlay");
+const formTitle = document.getElementById("form-title");
+const openFormBtn = document.getElementById("openFormModal");
+const cancelFormBtn = document.getElementById("cancelFormBtn");
+const lessonForm = document.getElementById("lessonForm");
 const titleInput = document.getElementById("title");
 const descriptionInput = document.getElementById("description");
-const form = document.getElementById("lessonForm");
 
+// Estado interno del formulario
+let formMode = "add"; // o 'edit'
+let currentIndex = null;
+
+// 👉 Modal de Confirmación para eliminar
 const modalOverlay = document.getElementById("modal-overlay");
 const confirmBtn = document.getElementById("confirm-delete");
 const cancelBtn = document.getElementById("cancel-delete");
 
-// Creamos el contenedor de errores:
-let errorContainer = document.createElement("div");
-errorContainer.className = "error-container";
-form.insertBefore(errorContainer, form.firstChild);
-
-let editIndex = null;
 let pendingDeleteIndex = null;
 let confirmCallback = null;
 
+// 👉 Error visual
+let errorContainer = document.createElement("div");
+errorContainer.className = "error-container";
+lessonForm.insertBefore(errorContainer, lessonForm.firstChild);
+
+// 🚀 Render de la tabla
 export const renderTable = (editCallback, deleteCallback) => {
   tableBody.innerHTML = "";
 
@@ -35,12 +43,14 @@ export const renderTable = (editCallback, deleteCallback) => {
     tableBody.appendChild(row);
   });
 
+  // Editar
   tableBody.querySelectorAll(".edit").forEach((btn) => {
     btn.addEventListener("click", () => {
       editCallback(parseInt(btn.dataset.index));
     });
   });
 
+  // Eliminar
   tableBody.querySelectorAll(".delete").forEach((btn) => {
     btn.addEventListener("click", () => {
       if (typeof deleteCallback === "function") {
@@ -50,51 +60,71 @@ export const renderTable = (editCallback, deleteCallback) => {
   });
 };
 
-export const fillForm = (lesson) => {
-  titleInput.value = lesson.title;
-  descriptionInput.value = lesson.description;
-  formButton.textContent = "Actualizar Lección";
+// 🧊 Modal de formulario: abrir
+export const openFormModal = (mode = "add", index = null, lesson = null) => {
+  formMode = mode;
+  currentIndex = index;
+  formTitle.textContent = mode === "add" ? "Agregar Lección" : "Editar Lección";
+
+  if (lesson) {
+    titleInput.value = lesson.title;
+    descriptionInput.value = lesson.description;
+  } else {
+    lessonForm.reset();
+  }
+
+  clearErrors();
+  formModal.classList.add("show");
 };
 
-export const resetForm = () => {
-  titleInput.value = "";
-  descriptionInput.value = "";
-  formButton.textContent = "Agregar Lección";
-  editIndex = null;
+// ❌ Modal de formulario: cerrar
+export const closeFormModal = () => {
+  formModal.classList.remove("show");
+  currentIndex = null;
+  formMode = "add";
+  lessonForm.reset();
   clearErrors();
 };
 
-export const setEditIndex = (index) => {
-  editIndex = index;
+// ⚡ Getters para estado del form
+export const getFormMode = () => {
+  return formMode;
 };
 
 export const getEditIndex = () => {
-  return editIndex;
+  return currentIndex;
 };
 
+// 🧽 Limpiar errores visuales
+export const clearErrors = () => {
+  errorContainer.textContent = "";
+  errorContainer.classList.remove("show");
+  titleInput.classList.remove("error");
+  descriptionInput.classList.remove("error");
+};
+
+// 🚨 Mostrar error visual
 export const showError = (message) => {
   errorContainer.textContent = message;
   errorContainer.classList.add("show");
-};
 
-export const clearErrors = () => {
-  const errorContainer = document.querySelector(".error-container");
-  if (errorContainer) {
-    errorContainer.textContent = "";
-    errorContainer.classList.remove("show");
+  // Marcamos los inputs con error según contexto
+  if (message.toLowerCase().includes("título")) {
+    document.getElementById("title").classList.add("error");
   }
-
-  // También limpiamos estilos visuales
-  document.getElementById("title")?.classList.remove("error");
-  document.getElementById("description")?.classList.remove("error");
+  if (message.toLowerCase().includes("descripción")) {
+    document.getElementById("description").classList.add("error");
+  }
 };
 
+// 🗑️ Modal de confirmación de eliminación
 export const showDeleteModal = (index, callback) => {
   pendingDeleteIndex = index;
   confirmCallback = callback;
   modalOverlay.classList.add("show");
 };
 
+// Confirmar eliminación
 confirmBtn.addEventListener("click", () => {
   modalOverlay.classList.remove("show");
   if (confirmCallback && pendingDeleteIndex !== null) {
@@ -104,6 +134,7 @@ confirmBtn.addEventListener("click", () => {
   confirmCallback = null;
 });
 
+// Cancelar eliminación
 cancelBtn.addEventListener("click", () => {
   modalOverlay.classList.remove("show");
   pendingDeleteIndex = null;

@@ -8,22 +8,9 @@
   </head>
   <body>
     <div class="container">
-      <h1>Lecciones de Inglés 📚</h1>
-      <form id="lessonForm">
-        <input
-          type="text"
-          id="title"
-          placeholder="Título de la lección"
-          required
-        />
-        <input
-          type="text"
-          id="description"
-          placeholder="Descripción"
-          required
-        />
-        <button type="submit">Agregar Lección</button>
-      </form>
+      <div class="header">
+        <h1>Lecciones de Inglés 📚</h1>
+      </div>
 
       <table id="lessonTable">
         <thead>
@@ -35,6 +22,9 @@
         </thead>
         <tbody></tbody>
       </table>
+      <div class="table-footer">
+        <button id="openFormModal" class="add-btn">+</button>
+      </div>
     </div>
 
     <div id="modal-overlay" class="modal-overlay">
@@ -46,6 +36,32 @@
           <button id="confirm-delete" class="confirm">Sí, eliminar</button>
           <button id="cancel-delete" class="cancel">Cancelar</button>
         </div>
+      </div>
+    </div>
+
+    <div id="form-modal-overlay" class="modal-overlay">
+      <div class="modal">
+        <h2 id="form-title">Agregar Lección</h2>
+        <form id="lessonForm">
+          <input
+            type="text"
+            id="title"
+            placeholder="Título de la lección"
+            required
+          />
+          <input
+            type="text"
+            id="description"
+            placeholder="Descripción"
+            required
+          />
+          <div class="modal-buttons">
+            <button type="submit" class="confirm">Guardar</button>
+            <button type="button" id="cancelFormBtn" class="cancel">
+              Cancelar
+            </button>
+          </div>
+        </form>
       </div>
     </div>
     <script type="module" src="./js/main.js"></script>
