@@ -54,7 +54,7 @@ lessonForm.addEventListener("submit", (e) => {
   }
 
   resetForm();
-  renderTable(handleEdit);
+  renderTable(handleEdit, handleDelete);
 });
 
 // Limpiar error al escribir:

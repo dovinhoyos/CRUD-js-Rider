@@ -21,6 +21,7 @@ let confirmCallback = null;
 
 export const renderTable = (editCallback, deleteCallback) => {
   tableBody.innerHTML = "";
+
   getLessons().forEach((lesson, index) => {
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -36,13 +37,15 @@ export const renderTable = (editCallback, deleteCallback) => {
 
   tableBody.querySelectorAll(".edit").forEach((btn) => {
     btn.addEventListener("click", () => {
-      editCallback(btn.dataset.index);
+      editCallback(parseInt(btn.dataset.index));
     });
   });
 
   tableBody.querySelectorAll(".delete").forEach((btn) => {
     btn.addEventListener("click", () => {
-      deleteCallback(btn.dataset.index);
+      if (typeof deleteCallback === "function") {
+        deleteCallback(parseInt(btn.dataset.index));
+      }
     });
   });
 };
@@ -75,8 +78,15 @@ export const showError = (message) => {
 };
 
 export const clearErrors = () => {
-  titleInput.classList.remove("error");
-  descriptionInput.classList.remove("error");
+  const errorContainer = document.querySelector(".error-container");
+  if (errorContainer) {
+    errorContainer.textContent = "";
+    errorContainer.classList.remove("show");
+  }
+
+  // También limpiamos estilos visuales
+  document.getElementById("title")?.classList.remove("error");
+  document.getElementById("description")?.classList.remove("error");
 };
 
 export const showDeleteModal = (index, callback) => {
