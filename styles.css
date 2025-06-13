@@ -28,10 +28,12 @@ form {
   gap: 10px;
   justify-content: center;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 form input {
-  flex: 1 1 40%;
+  flex: 1 1 45%;
+  min-width: 120px;
   padding: 10px;
   border: none;
   border-radius: 8px;
@@ -43,6 +45,11 @@ form input {
 form input:focus {
   background-color: rgba(255, 255, 255, 0.3);
   outline: none;
+}
+
+input.error {
+  border: 2px solid #f56565;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 form button {
@@ -112,6 +119,22 @@ button.delete {
 
 button.action-btn:hover {
   transform: scale(1.1);
+}
+
+.error-container {
+  color: #fff;
+  background-color: #f56565;
+  border: 1px dotted #fff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  display: none;
+}
+
+.error-container.show {
+  display: block;
+  animation: fadeIn 0.5s ease;
 }
 
 /* Animaciones claveframes */

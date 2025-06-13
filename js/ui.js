@@ -73,6 +73,6 @@ export const showError = (message) => {
 };
 
 export const clearErrors = () => {
-  errorContainer.textContent = "";
-  errorContainer.classList.remove("show");
+  titleInput.classList.remove("error");
+  descriptionInput.classList.remove("error");
 };

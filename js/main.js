@@ -28,6 +28,7 @@ lessonForm.addEventListener("submit", (e) => {
 
   // Validaciones:
   if (title.length < 3) {
+    titleInput.classList.add("error");
     showError("El título debe tener al menos 3 caracteres.");
     return;
   }
