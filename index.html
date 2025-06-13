@@ -24,6 +24,7 @@
         />
         <button type="submit">Agregar Lección</button>
       </form>
+
       <table id="lessonTable">
         <thead>
           <tr>
@@ -34,6 +35,18 @@
         </thead>
         <tbody></tbody>
       </table>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay">
+      <div class="modal">
+        <p id="modal-message">
+          ¿Estás seguro de que querés eliminar esta lección?
+        </p>
+        <div class="modal-buttons">
+          <button id="confirm-delete" class="confirm">Sí, eliminar</button>
+          <button id="cancel-delete" class="cancel">Cancelar</button>
+        </div>
+      </div>
     </div>
     <script type="module" src="./js/main.js"></script>
   </body>

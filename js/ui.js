@@ -6,16 +6,21 @@ const titleInput = document.getElementById("title");
 const descriptionInput = document.getElementById("description");
 const form = document.getElementById("lessonForm");
 
+const modalOverlay = document.getElementById("modal-overlay");
+const confirmBtn = document.getElementById("confirm-delete");
+const cancelBtn = document.getElementById("cancel-delete");
+
 // Creamos el contenedor de errores:
 let errorContainer = document.createElement("div");
 errorContainer.className = "error-container";
 form.insertBefore(errorContainer, form.firstChild);
 
 let editIndex = null;
+let pendingDeleteIndex = null;
+let confirmCallback = null;
 
-export const renderTable = (editCallback) => {
+export const renderTable = (editCallback, deleteCallback) => {
   tableBody.innerHTML = "";
-
   getLessons().forEach((lesson, index) => {
     const row = document.createElement("tr");
     row.innerHTML = `
@@ -37,10 +42,7 @@ export const renderTable = (editCallback) => {
 
   tableBody.querySelectorAll(".delete").forEach((btn) => {
     btn.addEventListener("click", () => {
-      if (confirm("¿Seguro querés eliminar esta lección?")) {
-        deleteLesson(btn.dataset.index);
-        renderTable(editCallback);
-      }
+      deleteCallback(btn.dataset.index);
     });
   });
 };
@@ -76,3 +78,24 @@ export const clearErrors = () => {
   titleInput.classList.remove("error");
   descriptionInput.classList.remove("error");
 };
+
+export const showDeleteModal = (index, callback) => {
+  pendingDeleteIndex = index;
+  confirmCallback = callback;
+  modalOverlay.classList.add("show");
+};
+
+confirmBtn.addEventListener("click", () => {
+  modalOverlay.classList.remove("show");
+  if (confirmCallback && pendingDeleteIndex !== null) {
+    confirmCallback(pendingDeleteIndex);
+  }
+  pendingDeleteIndex = null;
+  confirmCallback = null;
+});
+
+cancelBtn.addEventListener("click", () => {
+  modalOverlay.classList.remove("show");
+  pendingDeleteIndex = null;
+  confirmCallback = null;
+});

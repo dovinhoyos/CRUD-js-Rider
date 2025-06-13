@@ -3,6 +3,7 @@ import {
   addLesson,
   updateLesson,
   isDuplicateTitle,
+  deleteLesson,
 } from "./data.js";
 import {
   renderTable,
@@ -12,6 +13,7 @@ import {
   getEditIndex,
   showError,
   clearErrors,
+  showDeleteModal,
 } from "./ui.js";
 
 const lessonForm = document.getElementById("lessonForm");
@@ -34,6 +36,7 @@ lessonForm.addEventListener("submit", (e) => {
   }
 
   if (description.length < 3) {
+    descriptionInput.classList.add("error");
     showError("La descripción debe tener al menos 3 caracteres.");
     return;
   }
@@ -64,6 +67,13 @@ const handleEdit = (index) => {
   setEditIndex(index);
 };
 
+const handleDelete = (index) => {
+  showDeleteModal(index, (confirmedIndex) => {
+    deleteLesson(confirmedIndex);
+    renderTable(handleEdit, handleDelete);
+  });
+};
+
 document.addEventListener("DOMContentLoaded", () => {
-  renderTable(handleEdit);
+  renderTable(handleEdit, handleDelete);
 });
